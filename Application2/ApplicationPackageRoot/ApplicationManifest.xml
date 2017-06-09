@@ -3,6 +3,7 @@
   <Parameters>
     <Parameter Name="Web2_InstanceCount" DefaultValue="-1" />
     <Parameter Name="Web1_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="SslCertificate" DefaultValue="82F44227020EE677A9FB0EC08E734BEDABB93DC9" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -14,6 +15,9 @@
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="Web1Pkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
+    <Policies>
+      <EndpointBindingPolicy EndpointRef="ServiceEndpoint" CertificateRef="SslCert" />
+    </Policies>
   </ServiceManifestImport>
   <DefaultServices>
     <!-- The section below creates instances of service types, when an instance of this 
@@ -32,4 +36,7 @@
       </StatelessService>
     </Service>
   </DefaultServices>
+  <Certificates>
+    <EndpointCertificate X509FindValue="[SslCertificate]" Name="SslCert" />
+  </Certificates>
 </ApplicationManifest>
